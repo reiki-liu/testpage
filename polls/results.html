@@ -1,9 +1,66 @@
-<h1>{{poll.question}}</h1>
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="jp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>POLLS RESULT PAGE</title>
+
+    <!-- Bootstrap -->
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'bootstrap/css/app.css' %}" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queri
+es -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></sc
+ript>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script
+>
+    <![endif]-->
+  </head>
+
+  <body class="bg-info">
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/polls/">投票所</a>
+        </div>
+      </div><!--/.container-fluid -->
+    </div>
+
+    <div class="container">
+        <section class="header well">
+  <h1> Results </h1>
+        </section>
+
+<h3>{{poll.question}}</h3>
 
 <ul>
 {% for choice in poll.choice_set.all %}
-  <li>{{choice.choice}} -- {{choice.votes}} 票</li>
+  <li>{{choice.choice}} -- {{choice.votes}} 票</li><br><br><br>
 {% endfor %}
 </ul>
+        <h3>結果をTwitterで拡散しよう。</h3>
+        <div class="well">投票所で{{chosen}}を投票したよ！みんなも投票してみてね！ http://192.168.33.18:8000/polls/{{poll.id}}/</div>
+        <script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://192.168.33.18:8000/polls/{{poll.id}}/" data-text="投票所で{{chosen}}を投票したよ！みんなも投票してみてね！ " data-lang="ja" data-size="large" data-count="none">ツイート</a>
+        <br>
 
-<a href="/polls/{{poll.id}}/">Vote again</a>
+        <a class="btn btn-default" href="/polls/{{poll.id}}/">もう一度投票する</a>
+        &nbsp;
+        <a class="btn btn-default" href="/polls/">トップに戻る</a>
+
+    </div>
+    <br><br><br>
+        <footer class="well">
+          <div class="text-center">
+          <a href="mailto:info@hunza.jp">お問い合わせ</a> |
+          Twitter |
+          <span class="copy">&copy; Hunza Inc.</span>
+        </div>
+    </footer>
+</body>
+</html>

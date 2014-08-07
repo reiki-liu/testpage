@@ -16,10 +16,12 @@ def detail(request, poll_id):
 				  {'poll': p},
 				  context_instance=RequestContext(request))
 
-def results(request, poll_id):
+def results(request, poll_id, choice_id):
 	p = get_object_or_404(Poll,pk = poll_id)
+        q = p.choice_set.get(id=choice_id).choice
 	return render_to_response('polls/results.html',
-				  {'poll': p})
+				  {'poll': p,
+                   'chosen': q})
 
 def vote(request, poll_id):
 	p = get_object_or_404(Poll, pk=poll_id)
@@ -32,4 +34,4 @@ def vote(request, poll_id):
 	else:
 		selected_choice.votes += 1
 		selected_choice.save()
-		return HttpResponseRedirect(reverse('polls.views.results', args=(p.id,)))
+		return HttpResponseRedirect(reverse('polls.views.results', args=[p.id, selected_choice.id]))
